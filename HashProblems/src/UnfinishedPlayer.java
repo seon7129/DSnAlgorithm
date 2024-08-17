@@ -44,7 +44,7 @@ public class UnfinishedPlayer {
 		Iterator<Map.Entry<String, Integer>> entries = map.entrySet().iterator();
 		while (entries.hasNext()) {
 		    Map.Entry<String, Integer> entry = entries.next();
-		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+//		    System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
 		    if (entry.getValue() != 0)
 		    	result = entry.getKey();
 		}
