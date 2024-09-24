@@ -6,13 +6,59 @@ public class BiggestNum {
 	
 	public static void main (String[] args) {
         
-		int[] arr = {54,545,45,454};
+		int[] arr = {979 ,97, 978, 818, 81, 817};
 		System.out.println(solution(arr));
 		
     }
 	
+	public static Comparator<Integer> customComparator = new Comparator<Integer>() {
+        @Override
+        public int compare(Integer a, Integer b) {
+            // 각 숫자를 문자열로 변환
+            String strA = String.valueOf(a);
+            String strB = String.valueOf(b);
+            
+            // 문자열을 자리별로 비교
+            int minLength = Math.min(strA.length(), strB.length());
+
+            // 자리별 비교
+            for (int i = 0; i < minLength; i++) {
+                if (strA.charAt(i) != strB.charAt(i)) {
+                    // 다른 자리가 발견되면 그 자리를 기준으로 비교 (내림차순)
+                    return Character.compare(strB.charAt(i), strA.charAt(i));
+                }
+            }
+
+            // 자리별로 모두 같다면, 남은 길이와 첫 자리 비교
+            if (strA.length() != strB.length()) {
+                // A가 더 길다면
+                if (strA.length() > strB.length()) {
+                    char firstChar = strA.charAt(0);
+                    for (int i = minLength; i < strA.length(); i++) {
+                        if (strA.charAt(i) != firstChar) {
+                            return Character.compare(firstChar, strA.charAt(i));
+                        }
+                    }
+                    return -1; // A가 더 길고 모두 동일
+                } else {
+                    // B가 더 길다면
+                    char firstChar = strB.charAt(0);
+                    for (int i = minLength; i < strB.length(); i++) {
+                        if (strB.charAt(i) != firstChar) {
+                            return Character.compare(strB.charAt(i), firstChar);
+                        }
+                    }
+                    return 1; // B가 더 길고 모두 동일
+                }
+            }
+
+            // 길이도 같고 모든 자리도 같다면 동일한 숫자
+            return 0;
+        }
+    };
+	
 	// 숫자의 자리별로 비교하는 커스텀 Comparator
-    public static Comparator<Integer> customComparator = new Comparator<Integer>() {
+    public static Comparator<Integer> customComparator2 = new Comparator<Integer>() {
         @Override
         public int compare(Integer a, Integer b) {
             // 각 숫자를 문자열로 변환
@@ -31,6 +77,7 @@ public class BiggestNum {
             }
             // 1 11 111 110 101 10 100 1000 0
             // 979 97 978 818 81 817
+            // 545 54 45 454
             // 자리별로 모두 같다면, 길이가 긴 쪽의 남은 자리를 비교
 //            if (strA.length() != strB.length()) {
 //                if (strA.length() > strB.length()) {
